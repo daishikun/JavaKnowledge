@@ -6,8 +6,10 @@ import java.util.Map;
 public class WaterKing {
 
 
-    /** 该方法不符合条件的限制，因为使用和哈希表，额外的空间复杂度为O(n)
+    /**
+     * 该方法不符合条件的限制，因为使用和哈希表，额外的空间复杂度为O(n)
      * 方法正确，可作为对数器
+     *
      * @param arr
      * @return
      */
@@ -35,14 +37,42 @@ public class WaterKing {
 
     /**
      * 血量  0-无候选   >0-有候选  候选值
-     *  （1）无候选 当前数立为候选，血量=1
-     *  （2）有候选 1.当前数==候选值  血量+1
-     *             2.当前数！=候选值  血量-1
-     * @param args
+     * （1）无候选 当前数立为候选，血量=1
+     * （2）有候选 1.当前数==候选值  血量+1
+     * 2.当前数！=候选值  血量-1
      */
+    public static int waterKing(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return -1;
+        }
+        int candidate = 0;
+        int restHP = 0;
+        for (int cur : arr) {
+            if (restHP == 0) {
+                candidate = cur;
+                restHP = 1;
+            } else if (cur != candidate) {
+                restHP--;
+            } else {
+                restHP++;
+            }
+        }
+        if (restHP == 0) {
+            return -1;
+        }
+        int count = 0;
+        for (int num : arr) {
+            if (num == candidate) {
+                count++;
+            }
+        }
+        int N = arr.length;
+        return count > (N >> 1) ? candidate : -1;
+    }
 
     public static void main(String[] args) {
-        int[] a = {3,3,3,2,3,4};
+        int[] a = {3, 3, 3, 2, 3, 4};
         System.out.println(verify(a));
+        System.out.println(waterKing(a));
     }
 }
