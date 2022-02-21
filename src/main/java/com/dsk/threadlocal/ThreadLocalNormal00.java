@@ -6,12 +6,9 @@ import java.util.Date;
 public class ThreadLocalNormal00 {
 
     public static void main(String[] args) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String date = new ThreadLocalNormal00().date(10);
-                System.out.println(date);
-            }
+        new Thread(() -> {
+            String date = new ThreadLocalNormal00().date(10);
+            System.out.println(date);
         }).start();
 
         new Thread(new Runnable() {

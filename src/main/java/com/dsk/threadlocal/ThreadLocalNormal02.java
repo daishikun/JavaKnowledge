@@ -16,12 +16,9 @@ public class ThreadLocalNormal02 {
     public static void main(String[] args) {
         for (int i = 0; i < 1000; i++) {
             int finalI = i;
-           threadPool.submit(new Runnable() {
-               @Override
-               public void run() {
-                   String date = new ThreadLocalNormal02().date(finalI);
-                   System.out.println(date);
-               }
+           threadPool.submit(() -> {
+               String date = new ThreadLocalNormal02().date(finalI);
+               System.out.println(date);
            });
         }
         threadPool.shutdown();

@@ -13,12 +13,9 @@ public class ThreadLocalNormal01 {
     public static void main(String[] args) throws InterruptedException {
         for (int i = 0; i < 1000; i++) {
             int finalI = i;
-           threadPool.submit(new Runnable() {
-               @Override
-               public void run() {
-                   String date = new ThreadLocalNormal01().date(finalI);
-                   System.out.println(date);
-               }
+           threadPool.submit(() -> {
+               String date = new ThreadLocalNormal01().date(finalI);
+               System.out.println(date);
            });
         }
         threadPool.shutdown();

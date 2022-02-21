@@ -21,12 +21,9 @@ public class ThreadLocalNormal_part1 {
     public static void main(String[] args) {
         for (int i = 0; i < 1000; i++) {
             int finalI = i;
-           threadPool.submit(new Runnable() {
-               @Override
-               public void run() {
-                   String date = new ThreadLocalNormal_part1().date(finalI);
-                   System.out.println(date);
-               }
+           threadPool.submit(() -> {
+               String date = new ThreadLocalNormal_part1().date(finalI);
+               System.out.println(date);
            });
         }
         threadPool.shutdown();
@@ -42,11 +39,7 @@ public class ThreadLocalNormal_part1 {
 
 class ThreadSafeFormatter {
     public static ThreadLocal<SimpleDateFormat> dateFormatThreadLocal
-            = new ThreadLocal<SimpleDateFormat>(){
-        protected SimpleDateFormat initialValue(){
-            return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        }
-    };
+            = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"));
 
     public static ThreadLocal<SimpleDateFormat>
     dateFormatThreadLocal2 = ThreadLocal.withInitial(
